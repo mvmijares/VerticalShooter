@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<!DOCTYPE bulletml SYSTEM "bulletml.dtd">
+<bulletml type="horizontal" xmlns="http://www.asahi-net.or.jp/~cs8k-cyu/bulletml">
+  <action label="top">
+    <repeat>
+      <!-- The main loop, until the boss is destroyed -->
+      <times>99999</times>
+      <action>
+
+        <!-- Fragmentation bullets-->
+        <action>
+          <repeat>
+            <times>5 + (5*$rank)</times>
+
+            <action>
+              <action>
+                <!-- Launch 2 frag bullets-->
+                <fire>
+                  <direction type="absolute">120 - (60 * $rand)</direction>
+                  <bulletRef label="boss2_frag" />
+                </fire>
+                <fire>
+                  <direction type="absolute">-120 - (60 * $rand)</direction>
+                  <bulletRef label="boss2_frag" />
+                </fire>
+              </action>
+              <actionRef label="pause">
+                <param>40 - $rank*20</param>
+              </actionRef>
+            </action>
+          </repeat>
+        </action>
+
+        <actionRef label="pause">
+          <param>60</param>
+        </actionRef>
+
+        <!-- Bullet wall-->
+        <action>
+          <repeat>
+            <times>10 + (10*$rank)</times>
+            <action>
+              <repeat>
+                <times>18</times>
+                <action>
+                  <fire>
+                    <direction type="sequence">20</direction>
+                    <bulletRef label="boss2_wall"/>
+                  </fire>
+                </action>
+              </repeat>
+              <actionRef label="pause">
+                <param>30 - ($rank * 10)</param>
+              </actionRef>
+            </action>
+          </repeat>
+        </action>
+
+        <actionRef label="pause">
+          <param>120 - ($rank * 20)</param>
+        </actionRef>
+
+
+
+        <!-- End of main loop -->
+      </action>
+    </repeat>
+  </action>
+
+  <bullet label="boss2_wall">
+    <action>
+      <changeSpeed>
+        <speed>0.5 + ($rank * 0.1) </speed>
+        <term>200 - ($rank * 100)</term>
+      </changeSpeed>
+    </action>
+    <action>
+      <wait>360</wait>
+      <vanish></vanish>
+    </action>
+  </bullet>
+
+  <bullet label="boss2_frag">
+    <speed>0.5</speed>
+    <action>
+      <wait>30</wait>
+      <changeSpeed>
+        <speed>0.001</speed>
+        <term>1</term>
+      </changeSpeed>
+      <wait>5</wait>
+      <repeat>
+        <times>1 + 10 * $rank</times>
+        <action>
+          <fire>
+            <direction type="aim">0</direction>
+            <speed>0.6 + (0.25 * $rand) + (1 * $rank)</speed>
+            <bullet label="boss2_frag_part"/>
+          </fire>
+        </action>
+      </repeat>
+      <vanish/>
+    </action>
+  </bullet>
+
+  <bullet label="boss2_frag_part">
+    <action>
+      <wait>360</wait>
+      <vanish/>
+    </action>
+  </bullet>
+
+  <!--<changeDirection>
+    <direction type="absolute">-90</direction>
+    <term>1</term>
+  </changeDirection>-->
+
+
+  <action label="pause">
+    <wait>$1 - (($1 / 2) * $rank)</wait>
+  </action>
+</bulletml>

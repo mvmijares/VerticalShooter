@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<!DOCTYPE bulletml SYSTEM "bulletml.dtd">
+<bulletml type="horizontal" xmlns="http://www.asahi-net.or.jp/~cs8k-cyu/bulletml">
+  <action label="top">
+    <wait>60</wait>
+    <repeat>
+      <times>1 + 2 *$rank</times>
+      <action>
+        <actionRef label="fire_dna">
+          <param>0.85</param>
+        </actionRef>
+        <wait>120</wait>
+      </action>
+    </repeat>
+  </action>
+
+  <action label="fire_dna">
+    <repeat>
+      <times>20</times>
+      <action>
+        <fire>
+          <direction type="absolute">180</direction>
+          <speed>$1</speed>
+          <bullet label="large_shot">
+            <actionRef label="bullet_behavior">
+              <param>1</param>
+              <param>30</param>
+            </actionRef>
+          </bullet>
+        </fire>
+        <fire>
+          <direction type="absolute">360</direction>
+          <speed>$1</speed>
+          <bullet label="large_shot">
+            <actionRef label="bullet_behavior">
+              <param>-1</param>
+              <param>30</param>
+            </actionRef>
+          </bullet>
+        </fire>
+        <wait>5</wait>
+      </action>
+    </repeat>
+  </action>
+
+  <action label="bullet_behavior">
+    <action>
+      <repeat>
+        <times>3</times>
+        <action>
+          <changeDirection>
+            <direction type="relative">180 * $1</direction>
+            <term>$2</term>
+          </changeDirection>
+          <wait>$2</wait>
+          <changeDirection>
+            <direction type="relative">-180 * $1</direction>
+            <term>$2</term>
+          </changeDirection>
+        </action>
+      </repeat>
+    </action>
+  </action>
+
+</bulletml>

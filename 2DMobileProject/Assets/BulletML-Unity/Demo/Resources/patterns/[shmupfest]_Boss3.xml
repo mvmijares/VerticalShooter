@@ -1,0 +1,67 @@
+<?xml version="1.0" ?>
+<!DOCTYPE bulletml SYSTEM "bulletml.dtd">
+
+<bulletml type="horizontal" xmlns="http://www.asahi-net.or.jp/~cs8k-cyu/bulletml">
+
+
+  <action label="top">
+    <repeat>
+      <!-- The main loop, until the boss is destroyed -->
+      <times>99999</times>
+      <action>
+        <fire>
+          <direction type="absolute">360 * $rand</direction>
+          <bulletRef label="boss3_shot"/>
+        </fire>
+        <wait>30 - (15 * $rank)</wait>
+      </action>
+    </repeat>
+  </action>
+
+  <bullet label="boss3_shot">
+    <speed>0.25 + 0.25 * $rank</speed>
+    <action>
+      <wait>30 * (2.0 - 1.0 * $rank)</wait>
+      <actionRef label="frag_shot">
+        <param>0</param>
+      </actionRef>
+      <actionRef label="frag_shot">
+        <param>90</param>
+      </actionRef>
+      <actionRef label="frag_shot">
+        <param>180</param>
+      </actionRef>
+      <actionRef label="frag_shot">
+        <param>270</param>
+      </actionRef>
+      
+      <vanish />
+    </action>
+  </bullet>
+
+  <action label="frag_shot">
+    <fire>
+      <direction type="relative">$1</direction>
+      <speed>0.2 + $rank * 0.2</speed>
+      <bulletRef label="boss3_shot_2"/>
+    </fire>
+  </action>
+
+  <bullet label="boss3_shot_2">
+    <action>
+      <wait>20 * (2.0 - 1.0 * $rank)</wait>
+      <fire>
+        <direction type="relative">30</direction>
+        <speed>0.4 + $rank * 0.3</speed>
+        <bullet label="boss3_shot_3"/>
+      </fire>
+      <fire>
+        <direction type="relative">-30</direction>
+        <speed>0.4 + $rank * 0.3</speed>
+        <bullet label="boss3_shot_3"/>
+      </fire>
+      <vanish />
+    </action>
+  </bullet>
+
+</bulletml>

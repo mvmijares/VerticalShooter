@@ -1,0 +1,16 @@
+Level Design Vertical Shooter Game
+
+Enemy Manager
+	- contains event logic for when enemies dies
+		- Points
+	- 
+
+Spawn location logic
+	- spawning of enemies
+	- when to spawn enemies
+	- how enemies should move
+	- when to start shooting at player
+	- when to exit screen
+
+
+

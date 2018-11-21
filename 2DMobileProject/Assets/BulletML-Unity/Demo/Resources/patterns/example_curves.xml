@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+<!DOCTYPE bulletml SYSTEM "bulletml.dtd">
+<bulletml>
+
+  <action label="top">
+    <action>
+      <repeat>
+        <times>99999</times>
+        <action>
+          <!-- Curve shot-->
+          <fire>
+            <direction type="absolute">245</direction>
+            <speed>0.6</speed>
+            <bullet label="curve">
+              <action>
+                <changeDirection>
+                  <!-- Angle in degrees-->
+                  <!-- Relative = added to the base direction-->
+                  <direction type="relative">90</direction>
+                  <!-- Time, in frames, to apply the angle above-->
+                  <term>120</term>
+                </changeDirection>
+              </action>
+            </bullet>
+          </fire>
+
+          <wait>10</wait>
+        </action>
+      </repeat>
+    </action>
+  </action>
+
+
+</bulletml>

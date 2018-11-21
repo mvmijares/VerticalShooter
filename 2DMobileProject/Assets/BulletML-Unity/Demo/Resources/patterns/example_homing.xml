@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<!DOCTYPE bulletml SYSTEM "bulletml.dtd">
+<bulletml>
+
+	<action label="top">
+    <wait>30</wait>
+    
+    <!--Homing missile behavior-->
+    <fire>
+      <speed>0.6</speed>
+      <bullet label="homing">
+        <action>
+          <repeat>
+            <!--Update direction as long as the bullet is alive-->
+            <times>99999</times>
+            <action>
+              <!--Get player position-->
+              <changeDirection>
+                <direction type="aim">0</direction>
+                <term>0</term>
+              </changeDirection>
+              <!--Repeat target acquisition every n frames. Reduce a smoother movement.-->
+              <wait>10</wait>
+            </action>
+          </repeat>
+        </action>
+      </bullet>
+    </fire>
+	</action>
+
+	
+</bulletml>

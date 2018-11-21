@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<!DOCTYPE bulletml SYSTEM "bulletml.dtd">
+<bulletml type="horizontal" xmlns="http://www.asahi-net.or.jp/~cs8k-cyu/bulletml">
+  <action label="top">
+    <repeat>
+      <!-- The main loop, until the boss is destroyed -->
+      <times>99999</times>
+      <action>
+
+        <!-- Pattern 1 : most often-->
+        <repeat>
+          <times>3 + ($rand * 4)</times>
+        <action>
+          <action>
+            <!-- several bullets in a row -->
+            <repeat>
+              <times>3 + (5 * $rank)</times>
+              <action>
+                <fire label="shot">
+                  <bulletRef label="boss1_roll" />
+                </fire>
+                <!-- slightly differ each next shot -->
+                <wait>$rand * 10</wait>
+              </action>
+            </repeat>
+          </action>
+          <wait>(60 - (15 * $rank))</wait>
+        </action>
+        </repeat>
+
+        <!-- Pause between patterns -->
+        <actionRef label="pause" />
+
+        <!-- Pattern 2 sometimes -->
+        <action>
+          <!-- Bullet curtain -->
+          <repeat>
+            <times>25</times>
+
+            <action>
+
+              <action>
+                <!-- Tri shot-->
+                <actionRef label="directional_shot">
+                  <param>-30</param>
+                </actionRef>
+                <actionRef label="directional_shot">
+                  <param>0</param>
+                </actionRef>
+                <actionRef label="directional_shot">
+                  <param>30</param>
+                </actionRef>
+              </action>
+              <!-- space to go between shots -->
+              <wait>6</wait>
+            </action>
+          </repeat>
+        </action>
+
+        <!-- Pause between patterns -->
+        <actionRef label="pause" />
+
+      </action>
+    </repeat>
+  </action>
+
+  <action label="directional_shot">
+    <fire>
+      <direction type="aim">$1</direction>
+      <speed type="absolute">0.65 + ($rank * 0.5)</speed>
+      <bulletRef label="boss1_curtain" />
+    </fire>
+  </action>
+
+  <action label="pause">
+    <wait>60 - (20 * $rank)</wait>
+  </action>
+
+  <bullet label="boss1_roll">
+    <direction type="aim">(($rand * 25) - 12.5)</direction>
+    <speed>0.5</speed>
+    <action>
+      <wait>60 + ($rand*60)</wait>
+      <changeDirection>
+        <direction type="relative">-90</direction>
+        <term>4</term>
+      </changeDirection>
+      <changeSpeed>
+        <speed>0.5</speed>
+        <term>4</term>
+      </changeSpeed>
+      <wait>4</wait>
+      <changeDirection>
+        <direction type="sequence">25</direction>
+        <term>9999</term>
+      </changeDirection>
+      <wait>80+$rand*40</wait>
+      <vanish />
+    </action>
+  </bullet>
+
+  <bullet label="boss1_curtain">
+    <action>
+      <wait>500</wait>
+      <vanish />
+    </action>
+  </bullet>
+</bulletml>

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f63d18b8a9b3fb54c9500df7af584ac1, type: 3}
+  m_Name: GameBulletBank
+  m_EditorClassIdentifier: 
+  bullets:
+  - name: shoot
+    prefab: {fileID: 1064649928331604, guid: 622922efc954d0744b25d40ca51cc142, type: 2}
+    sprite: {fileID: 0}
+    TimeToLiveInSeconds: 10
+    DestroyWhenOutOfScreen: 0

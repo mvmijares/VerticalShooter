@@ -1,0 +1,224 @@
+<?xml version="1.0"?>
+<!DOCTYPE bulletml SYSTEM "bulletml.dtd">
+<bulletml type="horizontal" xmlns="http://www.asahi-net.or.jp/~cs8k-cyu/bulletml">
+  <action label="top">
+    <repeat>
+      <!-- The main loop, until the boss is destroyed -->
+      <times>99999</times>
+      <action>
+        <actionRef label="pattern1"></actionRef>
+        <actionRef label="pause">
+          <param>45</param>
+        </actionRef>
+        <actionRef label="pattern2">
+          <param>4</param>
+        </actionRef>
+        <actionRef label="pause">
+          <param>120</param>
+        </actionRef>
+        <actionRef label="pattern3"></actionRef>
+        <actionRef label="pause">
+          <param>120</param>
+        </actionRef>
+        <actionRef label="pattern2">
+          <param>0</param>
+        </actionRef>
+        <actionRef label="pause">
+          <param>45</param>
+        </actionRef>
+      </action>
+    </repeat>
+  </action>
+
+  <action label="pause">
+    <wait>$1 - (($1 / 2) * $rank)</wait>
+  </action>
+
+  <action label="pattern1">
+    <!-- Pattern 1 -->
+    <repeat>
+      <!-- Between 0 and n times -->
+      <times>(2 + 5 * $rank)</times>
+      <action>
+        <!-- Shoot a circle-->
+        <repeat>
+          <times>12</times>
+          <action>
+            <fire>
+              <direction type="sequence">30</direction>
+              <speed>1</speed>
+              <bulletRef label="boss4_p1_1"></bulletRef>
+            </fire>
+          </action>
+        </repeat>
+        <actionRef label="pause">
+          <param>30</param>
+        </actionRef>
+      </action>
+      <!-- Wait between same pattern repeat-->
+      <actionRef label="pause">
+        <param>30</param>
+      </actionRef>
+    </repeat>
+  </action>
+
+  <action label="pattern2">
+    <!-- Pattern 2 -->
+    <repeat>
+      <!-- Between 0 and n times -->
+      <times>$1 + ($1 + 1) * $rank)</times>
+      <action>
+        <actionRef label="pattern2_part">
+          <param>-10</param>
+        </actionRef>
+        <wait>30</wait>
+        <actionRef label="pattern2_part">
+          <param>10</param>
+        </actionRef>
+        <!-- Wait between same pattern repeat-->
+        <wait>30</wait>
+      </action>
+    </repeat>
+  </action>
+
+  <action label="pattern2_part">
+    <repeat>
+      <times>8</times>
+      <action>
+        <fire>
+          <direction type="sequence">$1</direction>
+          <speed>0.6+ 0.6*$rank</speed>
+          <bulletRef label="boss4_bullet"></bulletRef>
+        </fire>
+        <wait>5</wait>
+      </action>
+    </repeat>
+  </action>
+
+  <action label="pattern3">
+    <!-- Pattern 3 -->
+    <repeat>
+      <!-- Between 0 and n times -->
+      <times>(3 + 5 * $rank)</times>
+      <action>
+        <actionRef label="pattern3_part">
+          <param>0.25</param>
+        </actionRef>
+        <actionRef label="pattern3_part">
+          <param>0.75</param>
+        </actionRef>
+        <actionRef label="pattern3_part">
+          <param>1.25</param>
+        </actionRef>
+        <actionRef label="pattern3_part">
+          <param>1.75</param>
+        </actionRef>
+        <actionRef label="pattern3_part">
+          <param>2.25</param>
+        </actionRef>
+        <actionRef label="pattern3_part">
+          <param>2.75</param>
+        </actionRef>
+        <wait>180</wait>
+      </action>
+    </repeat>
+  </action>
+
+  <action label="pattern3_part">
+    <fire>
+      <direction type="absolute">270</direction>
+      <speed>$1</speed>
+      <bulletRef label="boss4_p3"></bulletRef>
+    </fire>
+  </action>
+
+  <!-- Bullets -->
+  <bullet label="boss4_p1_1">
+    <speed>0.1</speed>
+
+    <!-- Mega slow -->
+    <action>
+      <changeSpeed>
+        <speed>0.01</speed>
+        <term>10</term>
+      </changeSpeed>
+
+      <wait>30 - $rank * 25</wait>
+
+      <!-- Hack: recreate bullets to accelerate them -->
+      <fire>
+        <direction type="aim">0</direction>
+        <speed>0.1</speed>
+        <bulletRef label="boss4_p1_2"/>
+      </fire>
+
+      <vanish />
+
+    </action>
+  </bullet>
+
+  <bullet label="boss4_p1_2">
+    <!-- Accelerate -->
+    <action>
+      <changeSpeed>
+        <speed>0.75 + 1 * $rank</speed>
+        <term>60</term>
+      </changeSpeed>
+      <wait>45</wait>
+      <!-- Create a returning bullet-->
+      <fire>
+        <direction type="relative">-180</direction>
+        <speed>0.5</speed>
+        <bulletRef label="boss4_p1_3"/>
+      </fire>
+      <changeDirection>
+        <direction type="relative">5 - (2 * $rand * 5)</direction>
+        <term>0</term>
+      </changeDirection>
+    </action>
+
+  </bullet>
+
+  <bullet label="boss4_p1_3">
+    <action>
+      <!-- Accelerate -->
+      <changeSpeed>
+        <speed>0.75 + 1.5 * $rank</speed>
+        <term>60</term>
+      </changeSpeed>
+    </action>
+  </bullet>
+
+  <bullet label="boss4_bullet">
+  </bullet>
+
+  <bullet label="boss4_p3">
+    <action>
+      <wait>20</wait>
+      <changeSpeed>
+        <speed>0</speed>
+        <term>0</term>
+      </changeSpeed>
+      <wait>20</wait>
+      <repeat>
+        <times>20</times>
+        <action>
+          <fire>
+            <direction type="absolute">180</direction>
+            <speed>0.5 + $rank</speed>
+            <bulletRef label="boss4_bullet"></bulletRef>
+          </fire>
+          <fire>
+            <direction type="absolute">0</direction>
+            <speed>0.5 + $rank</speed>
+            <bulletRef label="boss4_bullet"></bulletRef>
+          </fire>
+          <wait>5</wait>
+        </action>
+      </repeat>
+      <wait>20</wait>
+      <vanish />
+    </action>
+  </bullet>
+
+</bulletml>
