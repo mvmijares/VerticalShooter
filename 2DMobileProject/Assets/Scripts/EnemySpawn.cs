@@ -55,7 +55,6 @@ public class EnemySpawn : MonoBehaviour {
         if (spawn) {
             GameObject clone = Instantiate(spawnDefinition.enemy, path.path[0].position, spawnDefinition.enemy.transform.rotation);
             Enemy enemy = clone.GetComponent<Enemy>();
-
             //Event handler for manager
             enemyManager.NewEnemySpawned(CreateSpawnDefinitions(enemy));
 

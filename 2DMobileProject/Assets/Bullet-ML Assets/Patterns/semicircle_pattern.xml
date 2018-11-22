@@ -5,7 +5,7 @@
     <repeat>
       <times>99</times>
     <actionRef label="down_semicircle">
-      <param>10</param>
+      <param>50</param>
       <wait>90</wait>
     </actionRef>
     </repeat>

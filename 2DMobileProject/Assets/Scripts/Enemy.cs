@@ -35,6 +35,9 @@ public class Enemy : MonoBehaviour {
 
     public event Action<Enemy> OnDeathEvent;
 
+    private void OnEnable() {
+        
+    }
     GameObject bulletSource;
     private void Awake() {
         enemyController = GetComponent<EnemyController>();
